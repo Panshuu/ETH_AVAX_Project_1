@@ -1,6 +1,6 @@
 # SimpleNFT Project
 
-This Solidity program implements a simple NFT (Non-Fungible Token) contract named "Project1" with basic NFT functionalities like adding and minting NFTs. It serves as an introduction to Solidity and NFT mechanics on the Ethereum blockchain.
+This Solidity program implements a simple NFT contract named "Project1" with basic NFT functionalities like adding and minting NFTs. It serves as an introduction to Solidity and NFT mechanics on the Ethereum blockchain.
 
 ## Description
 
