@@ -17,11 +17,17 @@ contract Project1
     }
 
     NFT[] public NFTs;
-    address[] public Owners;
 
     constructor() 
     {
         Contract_Owner = msg.sender;
+    }
+
+    address Adrs;
+    // Function to input address so that we can verify the owner
+    function inputAdrs(address _adrs) public
+    {
+        Adrs = _adrs;
     }
 
     // Function to add a new NFT
@@ -29,12 +35,14 @@ contract Project1
     {
         require(msg.sender == Contract_Owner, "Only the contract owner can add NFTs");
 
-        uint newNFT_Id = Total_NFTs + 1;
+        uint newNFT_Id = Total_NFTs + 1;  
         NFT memory newNFT = NFT(newNFT_Id, name, region, address(0));
         
+        // Add the new NFT to the array
         NFTs.push(newNFT);
         Total_NFTs++;
 
+        // Assert that the new NFT's owner is not set
         assert(NFTs[newNFT_Id - 1].Owner == address(0));
     }
 
@@ -45,21 +53,21 @@ contract Project1
         require(nftId > 0 && nftId <= Total_NFTs, "Invalid NFT ID");
         require(NFTs[nftId - 1].Owner == address(0), "NFT already minted");
 
+        // Assign the NFT to the specified address
         NFTs[nftId - 1].Owner = to;
-        Owners.push(to);
 
+        // Assert that the NFT's owner is correctly set
         assert(NFTs[nftId - 1].Owner == to);
     }
 
     // Function to retrieve details of a specific NFT by its ID
     function getNFT(uint nftId) public view returns (uint, string memory, string memory, address) 
     {
-        // Ensure the provided NFT ID is valid
         require(nftId > 0 && nftId <= Total_NFTs, "Invalid NFT ID");
-
         NFT memory nft = NFTs[nftId - 1];
         
-        if (nft.ID == 0) {
+        if (nft.Owner == address(0)) 
+        {
             revert("NFT not found");
         }
 
